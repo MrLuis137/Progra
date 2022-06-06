@@ -1,0 +1,2 @@
+rub1,Rubro numero 1,50000,560
+rub2,Rubro numero 2,988700,0
