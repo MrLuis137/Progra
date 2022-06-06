@@ -11,7 +11,8 @@
 #6. Generar un gráfico Por ejecución de presupuesto
 #7. Salir
 
-from this import d
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 nombre_proyecto = ''
@@ -124,6 +125,40 @@ def menu_reportar_gastos():
             return
     print("Rubro no encontrado")
 
+def generar_grafico_rubro():
+    presupuesto_total = 0
+    for rubro in rubros:
+        presupuesto_total += rubro.monto_presupuestado
+
+    labels = []
+    sizes = []
+    for rubro in rubros:
+        labels.append(rubro.codigo_control)
+        sizes.append(rubro.monto_presupuestado * 100 / presupuesto_total)
+
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
+            shadow=True, startangle=90)
+    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+    plt.show()
+
+def generar_grafico_Ejecucion():
+    np.random.seed(3)
+    x = []
+    y = []
+    for rubro in rubros:
+        x.append(rubro.codigo_control)
+        y.append(rubro.monto_ejecutado * 100 / rubro.monto_presupuestado)
+    
+    # plot
+    fig, ax = plt.subplots()
+    ax.bar(x, y, width=1, edgecolor="white", linewidth=0.7)
+    ax.set(xlim=(-1, 8), xticks=np.arange(0, 8),
+        ylim=(0, 100), yticks=np.arange(0, 10)* 10)
+    plt.title("Porcentaje de ejecución por rubros")
+    plt.show()
+
 def menu_principal():
     runing = True
     while(runing):
@@ -148,9 +183,9 @@ def menu_principal():
         elif(opcion == '4'):
                 menu_reportar_gastos()
         elif(opcion == '5'):
-                menu_abrir_proyecto()
+                generar_grafico_rubro()
         elif(opcion == '6'):
-            menu_crear_proyecto()
+            generar_grafico_Ejecucion()
         elif(opcion == "7"):
             runing = False
 
